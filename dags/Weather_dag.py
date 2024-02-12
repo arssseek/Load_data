@@ -50,8 +50,7 @@ def get_weather():
                 temperature_c.append(weather_data['forecasts'][i]['hours'][j]['temp'])
                 is_rainy.append(int(weather_data['forecasts'][i]['hours'][j]['prec_strength'] + 0.75))
                 pressure.append(weather_data['forecasts'][i]['hours'][j]['pressure_mm'])
-
-def weather_csv():
+        print(pd_city)
     CSV_DATA = pd.DataFrame({
         'City': pd_city,
         'date': pd_date,
@@ -60,18 +59,27 @@ def weather_csv():
         'pressure': pressure,
         'is_rainy': is_rainy
     })
+    print(pd_city)
     print(CSV_DATA)
     try:
         os.remove(file_name)
     except FileNotFoundError:
         pass
-    CSV_DATA.to_csv(file_name)
+    print(CSV_DATA)
+    CSV_DATA.to_csv(file_name, header=None, index=False)
+
 
 def csv_db():
-    CSV_DATA = pd.read_csv(file_name, header=None, index_col=False)
-    hook = PostgresHook(postgres_conn_id='postgres_localhost', schema='weather')
-    hook.bulk_l(table='weather_tab', rows=CSV_DATA)
-
+    sql_script = """
+    COPY weather_tab(city, dt, houur, temperature_c, pressure_mm, is_rainy)
+    FROM 'weather.csv'
+    DELIMITER ','
+    CSV HEADER;"""
+    hook = PostgresHook(postgres_conn_id='postgres_localhost', schema='weather_schema')
+    # hook.bulk_load(table='weather_tab', tmp_file=file_name)
+    hook_conn = hook.get_conn()
+    cursor = hook_conn.cursor()
+    cursor.execute(sql_script)
 
 args = {
     'owner': 'airflow',
@@ -81,7 +89,7 @@ args = {
 }
 
 weather_dag = DAG(
-    dag_id='Weather_DAG_V3.7',
+    dag_id='Weather_DAG_V5.3',
     default_args=args,
     schedule_interval="1/5 * * * *",
     start_date=days_ago(0,0,0,0,0)
@@ -92,19 +100,13 @@ get_weather_from_api = PythonOperator(
     task_id='get_weather',
     dag=weather_dag
 )
-weather_to_csv = PythonOperator(
-    python_callable=weather_csv,
-    task_id='weather_csv',
-    dag=weather_dag
-)
 create_db_schem = PostgresOperator(
     task_id='create_db_schem',
     postgres_conn_id='postgres_localhost',
     sql="""
         CREATE TABLE IF NOT EXISTS weather_tab(
-            id serial PRIMARY KEY,
             city varchar,
-            dt varchar,
+            dt date,
             houur smallint,
             temperature_c float,
             pressure_mm float,
@@ -118,4 +120,13 @@ data_to_db = PythonOperator(
     python_callable=csv_db,
     dag=weather_dag
 )
-get_weather_from_api >> weather_to_csv >> create_db_schem >> data_to_db
+
+select_opera = PostgresOperator(
+    task_id='select_opera',
+    postgres_conn_id='postgres_localhost',
+    sql="""
+        SELECT * FROM weather_tab""",
+    dag=weather_dag
+)
+
+get_weather_from_api >> create_db_schem >> data_to_db >> select_opera
