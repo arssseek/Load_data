@@ -1,0 +1,13 @@
+[2024-02-06T13:39:32.733+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: titanic_pivot.pivot_dataset manual__2024-02-06T13:39:26.450704+00:00 [queued]>
+[2024-02-06T13:39:32.742+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: titanic_pivot.pivot_dataset manual__2024-02-06T13:39:26.450704+00:00 [queued]>
+[2024-02-06T13:39:32.743+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 6
+[2024-02-06T13:39:32.792+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): pivot_dataset> on 2024-02-06 13:39:26.450704+00:00
+[2024-02-06T13:39:32.798+0000] {standard_task_runner.py:60} INFO - Started process 429 to run task
+[2024-02-06T13:39:32.801+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'titanic_pivot', 'pivot_dataset', 'manual__2024-02-06T13:39:26.450704+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/first_dag.py', '--cfg-path', '/tmp/tmphl3vg3go']
+[2024-02-06T13:39:32.803+0000] {standard_task_runner.py:88} INFO - Job 6: Subtask pivot_dataset
+[2024-02-06T13:39:32.848+0000] {task_command.py:423} INFO - Running <TaskInstance: titanic_pivot.pivot_dataset manual__2024-02-06T13:39:26.450704+00:00 [running]> on host 06573eafe810
+[2024-02-06T13:39:32.937+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='titanic_pivot' AIRFLOW_CTX_TASK_ID='pivot_dataset' AIRFLOW_CTX_EXECUTION_DATE='2024-02-06T13:39:26.450704+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-06T13:39:26.450704+00:00'
+[2024-02-06T13:39:34.953+0000] {python.py:201} INFO - Done. Returned value was: None
+[2024-02-06T13:39:34.961+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=titanic_pivot, task_id=pivot_dataset, execution_date=20240206T133926, start_date=20240206T133932, end_date=20240206T133934
+[2024-02-06T13:39:35.021+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-06T13:39:35.038+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
