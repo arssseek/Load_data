@@ -1,0 +1,32 @@
+[2024-02-13T10:34:26.477+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.data_to_db manual__2024-02-13T10:34:20.387097+00:00 [queued]>
+[2024-02-13T10:34:26.488+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.data_to_db manual__2024-02-13T10:34:20.387097+00:00 [queued]>
+[2024-02-13T10:34:26.489+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T10:34:26.511+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-13 10:34:20.387097+00:00
+[2024-02-13T10:34:26.519+0000] {standard_task_runner.py:60} INFO - Started process 3170 to run task
+[2024-02-13T10:34:26.522+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Training_DAG_V1.0', 'data_to_db', 'manual__2024-02-13T10:34:20.387097+00:00', '--job-id', '11274', '--raw', '--subdir', 'DAGS_FOLDER/traning_dag.py', '--cfg-path', '/tmp/tmp16k1dmft']
+[2024-02-13T10:34:26.524+0000] {standard_task_runner.py:88} INFO - Job 11274: Subtask data_to_db
+[2024-02-13T10:34:26.591+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Training_DAG_V1.0.data_to_db manual__2024-02-13T10:34:20.387097+00:00 [running]> on host 06573eafe810
+[2024-02-13T10:34:26.683+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Training_DAG_V1.0' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T10:34:20.387097+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-13T10:34:20.387097+00:00'
+[2024-02-13T10:34:26.693+0000] {logging_mixin.py:188} INFO - Москва 2024-02-12 1
+[2024-02-13T10:34:26.704+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T10:34:26.721+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/traning_dag.py", line 31, in csv_db
+    cursor.execute(sql_script)
+psycopg2.errors.UndefinedColumn: column "Москва" does not exist
+LINE 1: INSERT INTO Training VALUES (Москва)
+                                     ^
+
+[2024-02-13T10:34:26.733+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Training_DAG_V1.0, task_id=data_to_db, execution_date=20240213T103420, start_date=20240213T103426, end_date=20240213T103426
+[2024-02-13T10:34:26.747+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 11274 for task data_to_db (column "Москва" does not exist
+LINE 1: INSERT INTO Training VALUES (Москва)
+                                     ^
+; 3170)
+[2024-02-13T10:34:26.779+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-13T10:34:26.817+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -8,7 +8,7 @@ pd_time = []
 temperature_c = []
 is_rainy = []
 pressure = []
-file_name = 'weather.csv'
+file_name = 'For_file/weather.csv'
 city_coordinats = {
     'Moscow':(55.7522, 37.6155),
     'SaintPetersburg' : (59.939, 30.316),

@@ -1,0 +1,35 @@
+[2024-02-13T14:59:53.566+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1No_Pandas_Weather_DAG.data_to_db scheduled__2024-02-13T02:01:00+00:00 [queued]>
+[2024-02-13T14:59:53.622+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1No_Pandas_Weather_DAG.data_to_db scheduled__2024-02-13T02:01:00+00:00 [queued]>
+[2024-02-13T14:59:53.622+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T14:59:53.701+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-13 02:01:00+00:00
+[2024-02-13T14:59:53.766+0000] {standard_task_runner.py:60} INFO - Started process 8447 to run task
+[2024-02-13T14:59:53.765+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1No_Pandas_Weather_DAG', 'data_to_db', 'scheduled__2024-02-13T02:01:00+00:00', '--job-id', '11818', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp0e7qe8aa']
+[2024-02-13T14:59:53.783+0000] {standard_task_runner.py:88} INFO - Job 11818: Subtask data_to_db
+[2024-02-13T14:59:54.007+0000] {task_command.py:423} INFO - Running <TaskInstance: 1No_Pandas_Weather_DAG.data_to_db scheduled__2024-02-13T02:01:00+00:00 [running]> on host 06573eafe810
+[2024-02-13T14:59:54.515+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1No_Pandas_Weather_DAG' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T02:01:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-13T02:01:00+00:00'
+[2024-02-13T14:59:54.517+0000] {logging_mixin.py:188} INFO - /opt/***
+[2024-02-13T14:59:54.564+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T14:59:54.584+0000] {Weather_dag.py:84} INFO - columns: City,dt,hour,temperature_c,pressure,is_rainy
+[2024-02-13T14:59:54.585+0000] {Weather_dag.py:95} INFO - columns: City,dt,hour,temperature_c,pressure,is_rainy
+[2024-02-13T14:59:54.586+0000] {Weather_dag.py:99} INFO - values: VALUES(%s,%s,%s,%s,%s,%s)
+[2024-02-13T14:59:54.587+0000] {Weather_dag.py:103} INFO - type values: <class 'dict'>
+[2024-02-13T14:59:54.587+0000] {Weather_dag.py:104} INFO - type insert_stmt: <class 'str'>
+[2024-02-13T14:59:54.588+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/Weather_dag.py", line 106, in csv_db
+    psycopg2.extras.execute_batch(pCursor, insert_stmt, values_dict)
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1215, in execute_batch
+    sqls = [cur.mogrify(sql, args) for args in page]
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1215, in <listcomp>
+    sqls = [cur.mogrify(sql, args) for args in page]
+IndexError: string index out of range
+[2024-02-13T14:59:54.606+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1No_Pandas_Weather_DAG, task_id=data_to_db, execution_date=20240213T020100, start_date=20240213T145953, end_date=20240213T145954
+[2024-02-13T14:59:54.685+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 11818 for task data_to_db (string index out of range; 8447)
+[2024-02-13T14:59:54.730+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-13T14:59:54.793+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
