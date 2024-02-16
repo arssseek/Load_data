@@ -107,9 +107,9 @@ args = {
 weather_dag = DAG(
     dag_id='1Success_dag',
     default_args=args,
-    schedule_interval="1/5 * * * *",
-    start_date=days_ago(0,0,0,0,0)
-
+    schedule_interval='@daily',
+    start_date=days_ago(0,0,0,0,0),
+    catchup=False
 )
 get_weather_from_api = PythonOperator(
     python_callable=get_weather,
