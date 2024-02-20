@@ -12,9 +12,11 @@ with start_data as(
 		where (weather_tab.city = start_data.city and weather_tab.dt = start_data.dt)
 	)
 	group by city, dt, is_rainy
-	having is_rainy = 0)
-select start_data.city, start_data.dt, start_hour, end_hour
-from start_data
-left join end_data 
-on (start_data.city = end_data.city and start_data.dt = end_data.dt)
-order by city,dt
+	having is_rainy = 0),
+	rain_time as(
+	select start_data.city, start_data.dt, start_hour, end_hour
+	from start_data
+	left join end_data 
+	on (start_data.city = end_data.city and start_data.dt = end_data.dt)
+	order by city,dt
+	)
