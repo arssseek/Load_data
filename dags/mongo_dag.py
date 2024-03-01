@@ -2,27 +2,24 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.hooks.postgres_hook import PostgresHook
-from airflow.hooks.mongo_hook import MongoHook
+from pymongo import MongoClient
+import logging
 
+# Provide the connection details
+hostname = 'localhost'
+port = 27023  # Default MongoDB port
+username = "Test"  # If authentication is required
+password = "mongo_Test"  # If authentication is required
+# Create a MongoClient instance
 
 # Define function to load data from MongoDB to PostgreSQL
+def get_data():
+    client = MongoClient(hostname, port, username=username, password=password)
+    current = client["Test"]
+    collections = current["employees"]
+    logging.info(f"values: {collections.find_one()}")
 def load_data_mongodb_to_postgres():
-    mongo_hook = MongoHook(conn_id='mongo_connection')
-    postgres_hook = PostgresHook(postgres_conn_id='postgres_connection', schema='public')
-
-    # Fetch data from MongoDB collection
-    mongo_data = mongo_hook.find('mongo_collection', {})
-
-    # Load data into PostgreSQL table
-    postgres_conn = postgres_hook.get_conn()
-    cursor = postgres_conn.cursor()
-
-    for data in mongo_data:
-        cursor.execute("INSERT INTO postgres_table VALUES (%s, %s)", (data['column1'], data['column2']))
-
-    cursor.close()
-    postgres_conn.commit()
-    postgres_conn.close()
+    pass
 
 
 # Define the Airflow DAG
@@ -34,7 +31,7 @@ default_args = {
 }
 
 dag = DAG(
-    'mongodb_to_postgres',
+    dag_id='mongodb_to_postgres',
     default_args=default_args,
     description='DAG to load data from MongoDB to PostgreSQL',
     schedule_interval='@daily',
@@ -42,11 +39,17 @@ dag = DAG(
 )
 
 # Define the task
-load_data_task = PythonOperator(
+get_data = PythonOperator(
+    task_id='get_data',
+    python_callable=load_data_mongodb_to_postgres,
+    dag=dag,
+)
+
+load_data = PythonOperator(
     task_id='load_data_task',
     python_callable=load_data_mongodb_to_postgres,
     dag=dag,
 )
 
 # Define task dependencies
-load_data_task
+get_data >> load_data

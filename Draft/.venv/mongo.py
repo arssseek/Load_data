@@ -7,3 +7,6 @@ username = "Test"  # If authentication is required
 password = "mongo_Test"  # If authentication is required
 # Create a MongoClient instance
 client = MongoClient(hostname, port, username=username, password=password)
+current = client["Test"]
+collections = current["employees"]
+print(type(collections.find_one()["_id"]))
