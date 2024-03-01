@@ -116,22 +116,6 @@ get_weather_from_api = PythonOperator(
     task_id='get_weather',
     dag=weather_dag
 )
-create_db_schem = PostgresOperator(
-    task_id='create_db_schem',
-    postgres_conn_id='postgres_localhost',
-    sql="""
-        DROP TABLE weather_tab;
-        CREATE TABLE weather_tab(
-            id SERIAL PRIMARY KEY,
-	        city varchar NULL,
-	        dt date NULL,
-	        hour int2 NULL,
-	        temperature_c float8 NULL,
-	        pressure float8 NULL,
-	        is_rainy int NULL
-    );""",
-    dag=weather_dag
-)
 
 data_to_db = PythonOperator(
     task_id='data_to_db',
@@ -147,4 +131,4 @@ select_opera = PostgresOperator(
     dag=weather_dag
 )
 
-get_weather_from_api >> create_db_schem >> data_to_db >> select_opera
+get_weather_from_api >> data_to_db >> select_opera

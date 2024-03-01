@@ -1,0 +1,110 @@
+[2024-02-23T12:01:26.349+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Trigger_dag.insert_value scheduled__2024-02-23T11:41:00+00:00 [queued]>
+[2024-02-23T12:01:26.359+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Trigger_dag.insert_value scheduled__2024-02-23T11:41:00+00:00 [queued]>
+[2024-02-23T12:01:26.359+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-23T12:01:26.375+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): insert_value> on 2024-02-23 11:41:00+00:00
+[2024-02-23T12:01:26.382+0000] {standard_task_runner.py:60} INFO - Started process 23633 to run task
+[2024-02-23T12:01:26.385+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Trigger_dag', 'insert_value', 'scheduled__2024-02-23T11:41:00+00:00', '--job-id', '13229', '--raw', '--subdir', 'DAGS_FOLDER/trigger_dag.py', '--cfg-path', '/tmp/tmpa6h77y8c']
+[2024-02-23T12:01:26.387+0000] {standard_task_runner.py:88} INFO - Job 13229: Subtask insert_value
+[2024-02-23T12:01:26.438+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Trigger_dag.insert_value scheduled__2024-02-23T11:41:00+00:00 [running]> on host 06573eafe810
+[2024-02-23T12:01:26.533+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Trigger_dag' AIRFLOW_CTX_TASK_ID='insert_value' AIRFLOW_CTX_EXECUTION_DATE='2024-02-23T11:41:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-23T11:41:00+00:00'
+[2024-02-23T12:01:26.534+0000] {sql.py:276} INFO - Executing: 
+        with start_data as(
+                select city, dt, is_rainy,
+                min(hour) as start_hour
+                from weather_tab 
+                group by city,dt, is_rainy
+                having is_rainy = 1), 
+	        end_data as(
+                select city,dt,min(hour) as end_hour from weather_tab
+                where hour > (
+                    select start_hour 
+                    from start_data
+                    where (weather_tab.city = start_data.city and weather_tab.dt = start_data.dt)
+                )
+                group by city, dt, is_rainy
+                having is_rainy = 0),
+            rain_time as(
+            select start_data.city, start_data.dt, start_hour, end_hour
+            from start_data
+            left join end_data 
+            on (start_data.city = end_data.city and start_data.dt = end_data.dt)
+            order by city,dt),
+            avg_data as( 
+                select city, dt, hour,
+                avg(temperature_c) over (partition by city order by dt, hour rows between current row and 48 following) as avg_temp,
+                avg(pressure) over (partition by city order by dt, hour rows between current row and 48 following) as avg_press
+                FROM weather_tab
+                ), 
+	        metric_data as(
+                select avg_data.city, avg_data.dt, avg_data.hour, avg_data.avg_temp,
+                    avg_data.avg_press, rain_time.start_hour, rain_time.end_hour 
+                from avg_data
+                left join rain_time on (avg_data.city = rain_time.city and avg_data.dt = rain_time.dt)
+            )
+        insert into metric(city, dt, hour,
+	        avg_temp, avg_press, start_hour,	end_hour)
+        select * from metric_data
+        where not exists (select * from metric);
+    
+[2024-02-23T12:01:26.543+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-23T12:01:26.551+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-23T12:01:26.563+0000] {sql.py:450} INFO - Running statement: 
+        with start_data as(
+                select city, dt, is_rainy,
+                min(hour) as start_hour
+                from weather_tab 
+                group by city,dt, is_rainy
+                having is_rainy = 1), 
+	        end_data as(
+                select city,dt,min(hour) as end_hour from weather_tab
+                where hour > (
+                    select start_hour 
+                    from start_data
+                    where (weather_tab.city = start_data.city and weather_tab.dt = start_data.dt)
+                )
+                group by city, dt, is_rainy
+                having is_rainy = 0),
+            rain_time as(
+            select start_data.city, start_data.dt, start_hour, end_hour
+            from start_data
+            left join end_data 
+            on (start_data.city = end_data.city and start_data.dt = end_data.dt)
+            order by city,dt),
+            avg_data as( 
+                select city, dt, hour,
+                avg(temperature_c) over (partition by city order by dt, hour rows between current row and 48 following) as avg_temp,
+                avg(pressure) over (partition by city order by dt, hour rows between current row and 48 following) as avg_press
+                FROM weather_tab
+                ), 
+	        metric_data as(
+                select avg_data.city, avg_data.dt, avg_data.hour, avg_data.avg_temp,
+                    avg_data.avg_press, rain_time.start_hour, rain_time.end_hour 
+                from avg_data
+                left join rain_time on (avg_data.city = rain_time.city and avg_data.dt = rain_time.dt)
+            )
+        insert into metric(city, dt, hour,
+	        avg_temp, avg_press, start_hour,	end_hour)
+        select * from metric_data
+        where not exists (select * from metric);
+    , parameters: None
+[2024-02-23T12:01:26.569+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedTable: relation "metric" does not exist
+LINE 35:         insert into metric(city, dt, hour,
+                             ^
+
+[2024-02-23T12:01:26.578+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Trigger_dag, task_id=insert_value, execution_date=20240223T114100, start_date=20240223T120126, end_date=20240223T120126
+[2024-02-23T12:01:26.592+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 13229 for task insert_value (relation "metric" does not exist
+LINE 35:         insert into metric(city, dt, hour,
+                             ^
+; 23633)
+[2024-02-23T12:01:26.640+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-23T12:01:26.656+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
