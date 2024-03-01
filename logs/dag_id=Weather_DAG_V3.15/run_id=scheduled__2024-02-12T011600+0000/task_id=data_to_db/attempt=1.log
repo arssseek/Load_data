@@ -1,0 +1,34 @@
+[2024-02-12T10:30:44.073+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V3.15.data_to_db scheduled__2024-02-12T01:16:00+00:00 [queued]>
+[2024-02-12T10:30:44.088+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V3.15.data_to_db scheduled__2024-02-12T01:16:00+00:00 [queued]>
+[2024-02-12T10:30:44.088+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T10:30:44.114+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-12 01:16:00+00:00
+[2024-02-12T10:30:44.123+0000] {standard_task_runner.py:60} INFO - Started process 6163 to run task
+[2024-02-12T10:30:44.127+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V3.15', 'data_to_db', 'scheduled__2024-02-12T01:16:00+00:00', '--job-id', '7091', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp_xwqgczz']
+[2024-02-12T10:30:44.128+0000] {standard_task_runner.py:88} INFO - Job 7091: Subtask data_to_db
+[2024-02-12T10:30:44.244+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V3.15.data_to_db scheduled__2024-02-12T01:16:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T10:30:44.392+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V3.15' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T01:16:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T01:16:00+00:00'
+[2024-02-12T10:30:44.423+0000] {postgres.py:172} INFO - Running copy expert: COPY weather_tab FROM STDIN, filename: weather.csv
+[2024-02-12T10:30:44.436+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T10:30:44.453+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/Weather_dag.py", line 76, in csv_db
+    hook.bulk_load(tmp_file=file_name, table='weather_tab')
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/postgres/hooks/postgres.py", line 194, in bulk_load
+    self.copy_expert(f"COPY {table} FROM STDIN", tmp_file)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/postgres/hooks/postgres.py", line 178, in copy_expert
+    cur.copy_expert(sql, file)
+psycopg2.errors.InvalidTextRepresentation: invalid input syntax for type integer: ",0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0,22.0,23.0,24.0,25.0,26.0,27.0,28.0,29.0,30.0,31.0,32.0,33.0,34.0,35.0,36.0,37.0,38.0,39.0,40.0,41.0,42.0,43.0,44.0,45.0,46.0,47.0,48.0,49.0,50.0,51.0,52.0,53.0,54.0,55.0,56.0,57.0,58.0,59.0,60.0,61.0,62.0,63.0,64.0,65.0,66.0,67.0,68.0,69.0,70.0,71.0,72.0,73.0,74.0,75.0,76.0,77.0,78.0,79.0,80.0,81.0,82.0,83.0,84.0,85.0,86.0,87.0,88.0,89.0,90.0,91.0,92.0,93.0,94.0,95.0,96.0,97.0,98.0,99.0,100.0,101.0,102.0,103.0,104.0,105.0,106.0,107.0,108.0,109.0,110.0,111.0,112.0,113.0,114.0,115.0,116.0,117.0,118.0,119.0,120.0,121.0,122.0,123.0,124.0,125.0,126.0,127.0,128.0,129.0,130.0,131.0,132.0,133.0,134.0,135.0,136.0,137.0,138.0,139.0,140.0,141.0,142.0,143.0,144.0,145.0,146.0,147.0,148,149,150,151,152,153"
+CONTEXT:  COPY weather_tab, line 1, column id: ",0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0..."
+
+[2024-02-12T10:30:44.474+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=Weather_DAG_V3.15, task_id=data_to_db, execution_date=20240212T011600, start_date=20240212T103044, end_date=20240212T103044
+[2024-02-12T10:30:44.496+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 7091 for task data_to_db (invalid input syntax for type integer: ",0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0,22.0,23.0,24.0,25.0,26.0,27.0,28.0,29.0,30.0,31.0,32.0,33.0,34.0,35.0,36.0,37.0,38.0,39.0,40.0,41.0,42.0,43.0,44.0,45.0,46.0,47.0,48.0,49.0,50.0,51.0,52.0,53.0,54.0,55.0,56.0,57.0,58.0,59.0,60.0,61.0,62.0,63.0,64.0,65.0,66.0,67.0,68.0,69.0,70.0,71.0,72.0,73.0,74.0,75.0,76.0,77.0,78.0,79.0,80.0,81.0,82.0,83.0,84.0,85.0,86.0,87.0,88.0,89.0,90.0,91.0,92.0,93.0,94.0,95.0,96.0,97.0,98.0,99.0,100.0,101.0,102.0,103.0,104.0,105.0,106.0,107.0,108.0,109.0,110.0,111.0,112.0,113.0,114.0,115.0,116.0,117.0,118.0,119.0,120.0,121.0,122.0,123.0,124.0,125.0,126.0,127.0,128.0,129.0,130.0,131.0,132.0,133.0,134.0,135.0,136.0,137.0,138.0,139.0,140.0,141.0,142.0,143.0,144.0,145.0,146.0,147.0,148,149,150,151,152,153"
+CONTEXT:  COPY weather_tab, line 1, column id: ",0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0..."
+; 6163)
+[2024-02-12T10:30:44.550+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-12T10:30:44.571+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

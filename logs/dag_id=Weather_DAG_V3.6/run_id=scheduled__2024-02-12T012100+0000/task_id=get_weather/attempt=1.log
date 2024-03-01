@@ -1,0 +1,13 @@
+[2024-02-12T07:28:57.725+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V3.6.get_weather scheduled__2024-02-12T01:21:00+00:00 [queued]>
+[2024-02-12T07:28:57.786+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V3.6.get_weather scheduled__2024-02-12T01:21:00+00:00 [queued]>
+[2024-02-12T07:28:57.787+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T07:28:57.872+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): get_weather> on 2024-02-12 01:21:00+00:00
+[2024-02-12T07:28:57.881+0000] {standard_task_runner.py:60} INFO - Started process 299 to run task
+[2024-02-12T07:28:57.896+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V3.6', 'get_weather', 'scheduled__2024-02-12T01:21:00+00:00', '--job-id', '6007', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmpcv23r9cl']
+[2024-02-12T07:28:57.897+0000] {standard_task_runner.py:88} INFO - Job 6007: Subtask get_weather
+[2024-02-12T07:28:58.014+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V3.6.get_weather scheduled__2024-02-12T01:21:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T07:28:58.194+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V3.6' AIRFLOW_CTX_TASK_ID='get_weather' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T01:21:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T01:21:00+00:00'
+[2024-02-12T07:28:59.405+0000] {python.py:201} INFO - Done. Returned value was: None
+[2024-02-12T07:28:59.436+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=Weather_DAG_V3.6, task_id=get_weather, execution_date=20240212T012100, start_date=20240212T072857, end_date=20240212T072859
+[2024-02-12T07:28:59.502+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-12T07:28:59.530+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

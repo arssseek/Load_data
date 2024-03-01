@@ -1,0 +1,26 @@
+[2024-02-16T13:14:25.979+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Trigger_dag.insert_value manual__2024-02-16T13:14:09.419944+00:00 [queued]>
+[2024-02-16T13:14:25.988+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Trigger_dag.insert_value manual__2024-02-16T13:14:09.419944+00:00 [queued]>
+[2024-02-16T13:14:25.988+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-16T13:14:26.007+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): insert_value> on 2024-02-16 13:14:09.419944+00:00
+[2024-02-16T13:14:26.014+0000] {standard_task_runner.py:60} INFO - Started process 5233 to run task
+[2024-02-16T13:14:26.018+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Trigger_dag', 'insert_value', 'manual__2024-02-16T13:14:09.419944+00:00', '--job-id', '12186', '--raw', '--subdir', 'DAGS_FOLDER/trigger_dag.py', '--cfg-path', '/tmp/tmpa3dutj77']
+[2024-02-16T13:14:26.019+0000] {standard_task_runner.py:88} INFO - Job 12186: Subtask insert_value
+[2024-02-16T13:14:26.069+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Trigger_dag.insert_value manual__2024-02-16T13:14:09.419944+00:00 [running]> on host 06573eafe810
+[2024-02-16T13:14:26.159+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Trigger_dag' AIRFLOW_CTX_TASK_ID='insert_value' AIRFLOW_CTX_EXECUTION_DATE='2024-02-16T13:14:09.419944+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-16T13:14:09.419944+00:00'
+[2024-02-16T13:14:26.161+0000] {sql.py:276} INFO - Executing: 
+    
+    
+[2024-02-16T13:14:26.169+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-16T13:14:26.171+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 389, in run
+    raise ValueError("List of SQL statements is empty")
+ValueError: List of SQL statements is empty
+[2024-02-16T13:14:26.183+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Trigger_dag, task_id=insert_value, execution_date=20240216T131409, start_date=20240216T131425, end_date=20240216T131426
+[2024-02-16T13:14:26.220+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 12186 for task insert_value (List of SQL statements is empty; 5233)
+[2024-02-16T13:14:26.230+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-16T13:14:26.248+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

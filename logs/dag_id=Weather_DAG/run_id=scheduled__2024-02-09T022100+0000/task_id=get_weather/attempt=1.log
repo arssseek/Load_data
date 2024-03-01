@@ -1,0 +1,69 @@
+[2024-02-09T07:22:02.948+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG.get_weather scheduled__2024-02-09T02:21:00+00:00 [queued]>
+[2024-02-09T07:22:02.985+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG.get_weather scheduled__2024-02-09T02:21:00+00:00 [queued]>
+[2024-02-09T07:22:02.992+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 2
+[2024-02-09T07:22:03.052+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): get_weather> on 2024-02-09 02:21:00+00:00
+[2024-02-09T07:22:03.067+0000] {standard_task_runner.py:60} INFO - Started process 704 to run task
+[2024-02-09T07:22:03.090+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG', 'get_weather', 'scheduled__2024-02-09T02:21:00+00:00', '--job-id', '1478', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp1qyl7i6s']
+[2024-02-09T07:22:03.099+0000] {standard_task_runner.py:88} INFO - Job 1478: Subtask get_weather
+[2024-02-09T07:22:03.292+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG.get_weather scheduled__2024-02-09T02:21:00+00:00 [running]> on host 06573eafe810
+[2024-02-09T07:22:03.649+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG' AIRFLOW_CTX_TASK_ID='get_weather' AIRFLOW_CTX_EXECUTION_DATE='2024-02-09T02:21:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-09T02:21:00+00:00'
+[2024-02-09T07:22:21.027+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 761, in _update_chunk_length
+    self.chunk_left = int(line, 16)
+ValueError: invalid literal for int() with base 16: b''
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 444, in _error_catcher
+    yield
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 828, in read_chunked
+    self._update_chunk_length()
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 765, in _update_chunk_length
+    raise InvalidChunkLength(self, line)
+urllib3.exceptions.InvalidChunkLength: InvalidChunkLength(got length b'', 0 bytes read)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/models.py", line 816, in generate
+    yield from self.raw.stream(chunk_size, decode_content=True)
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 624, in stream
+    for line in self.read_chunked(amt, decode_content=decode_content):
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 857, in read_chunked
+    self._original_response.close()
+  File "/usr/local/lib/python3.8/contextlib.py", line 131, in __exit__
+    self.gen.throw(type, value, traceback)
+  File "/home/airflow/.local/lib/python3.8/site-packages/urllib3/response.py", line 461, in _error_catcher
+    raise ProtocolError("Connection broken: %r" % e, e)
+urllib3.exceptions.ProtocolError: ("Connection broken: InvalidChunkLength(got length b'', 0 bytes read)", InvalidChunkLength(got length b'', 0 bytes read))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/Weather_dag.py", line 39, in get_weather
+    response = req.get(URL, params=params, headers=headers)
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/sessions.py", line 747, in send
+    r.content
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/models.py", line 899, in content
+    self._content = b"".join(self.iter_content(CONTENT_CHUNK_SIZE)) or b""
+  File "/home/airflow/.local/lib/python3.8/site-packages/requests/models.py", line 818, in generate
+    raise ChunkedEncodingError(e)
+requests.exceptions.ChunkedEncodingError: ("Connection broken: InvalidChunkLength(got length b'', 0 bytes read)", InvalidChunkLength(got length b'', 0 bytes read))
+[2024-02-09T07:22:21.061+0000] {taskinstance.py:1138} INFO - Marking task as UP_FOR_RETRY. dag_id=Weather_DAG, task_id=get_weather, execution_date=20240209T022100, start_date=20240209T072202, end_date=20240209T072221
+[2024-02-09T07:22:21.085+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 1478 for task get_weather (("Connection broken: InvalidChunkLength(got length b'', 0 bytes read)", InvalidChunkLength(got length b'', 0 bytes read)); 704)
+[2024-02-09T07:22:21.153+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-09T07:22:21.197+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

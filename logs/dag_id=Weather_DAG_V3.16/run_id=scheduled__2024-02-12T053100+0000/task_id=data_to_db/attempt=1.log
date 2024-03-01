@@ -1,0 +1,34 @@
+[2024-02-12T10:36:56.474+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V3.16.data_to_db scheduled__2024-02-12T05:31:00+00:00 [queued]>
+[2024-02-12T10:36:56.529+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V3.16.data_to_db scheduled__2024-02-12T05:31:00+00:00 [queued]>
+[2024-02-12T10:36:56.539+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T10:36:56.666+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-12 05:31:00+00:00
+[2024-02-12T10:36:56.706+0000] {standard_task_runner.py:60} INFO - Started process 7127 to run task
+[2024-02-12T10:36:56.781+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V3.16', 'data_to_db', 'scheduled__2024-02-12T05:31:00+00:00', '--job-id', '7379', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp03iyj9ai']
+[2024-02-12T10:36:56.796+0000] {standard_task_runner.py:88} INFO - Job 7379: Subtask data_to_db
+[2024-02-12T10:36:56.967+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V3.16.data_to_db scheduled__2024-02-12T05:31:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T10:36:57.333+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V3.16' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T05:31:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T05:31:00+00:00'
+[2024-02-12T10:36:57.409+0000] {postgres.py:172} INFO - Running copy expert: COPY weather_tabb FROM STDIN, filename: weather.csv
+[2024-02-12T10:36:57.483+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T10:36:57.559+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/Weather_dag.py", line 76, in csv_db
+    hook.bulk_load(tmp_file=file_name, table='weather_tabb')
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/postgres/hooks/postgres.py", line 194, in bulk_load
+    self.copy_expert(f"COPY {table} FROM STDIN", tmp_file)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/postgres/hooks/postgres.py", line 178, in copy_expert
+    cur.copy_expert(sql, file)
+psycopg2.errors.BadCopyFileFormat: missing data for column "dt"
+CONTEXT:  COPY weather_tabb, line 1: ",0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0..."
+
+[2024-02-12T10:36:57.588+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=Weather_DAG_V3.16, task_id=data_to_db, execution_date=20240212T053100, start_date=20240212T103656, end_date=20240212T103657
+[2024-02-12T10:36:57.663+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 7379 for task data_to_db (missing data for column "dt"
+CONTEXT:  COPY weather_tabb, line 1: ",0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0..."
+; 7127)
+[2024-02-12T10:36:57.740+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-12T10:36:57.840+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

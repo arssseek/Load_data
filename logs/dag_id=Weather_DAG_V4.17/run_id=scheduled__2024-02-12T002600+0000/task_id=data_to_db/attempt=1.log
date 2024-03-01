@@ -1,0 +1,15 @@
+[2024-02-12T14:16:33.808+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V4.17.data_to_db scheduled__2024-02-12T00:26:00+00:00 [queued]>
+[2024-02-12T14:16:33.860+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V4.17.data_to_db scheduled__2024-02-12T00:26:00+00:00 [queued]>
+[2024-02-12T14:16:33.869+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T14:16:34.029+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-12 00:26:00+00:00
+[2024-02-12T14:16:34.039+0000] {standard_task_runner.py:60} INFO - Started process 19998 to run task
+[2024-02-12T14:16:34.048+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V4.17', 'data_to_db', 'scheduled__2024-02-12T00:26:00+00:00', '--job-id', '10650', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmpeox3rm_q']
+[2024-02-12T14:16:34.080+0000] {standard_task_runner.py:88} INFO - Job 10650: Subtask data_to_db
+[2024-02-12T14:16:34.209+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V4.17.data_to_db scheduled__2024-02-12T00:26:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T14:16:34.620+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V4.17' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T00:26:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T00:26:00+00:00'
+[2024-02-12T14:16:34.622+0000] {postgres.py:172} INFO - Running copy expert: COPY weather_tab FROM STDIN, filename: weather.csv
+[2024-02-12T14:16:34.652+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T14:16:34.680+0000] {python.py:201} INFO - Done. Returned value was: None
+[2024-02-12T14:16:34.708+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=Weather_DAG_V4.17, task_id=data_to_db, execution_date=20240212T002600, start_date=20240212T141633, end_date=20240212T141634
+[2024-02-12T14:16:34.820+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-12T14:16:35.126+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

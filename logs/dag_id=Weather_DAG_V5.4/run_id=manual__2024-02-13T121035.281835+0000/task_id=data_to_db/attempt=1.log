@@ -1,0 +1,44 @@
+[2024-02-13T12:10:43.361+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V5.4.data_to_db manual__2024-02-13T12:10:35.281835+00:00 [queued]>
+[2024-02-13T12:10:43.371+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V5.4.data_to_db manual__2024-02-13T12:10:35.281835+00:00 [queued]>
+[2024-02-13T12:10:43.372+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T12:10:43.388+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-13 12:10:35.281835+00:00
+[2024-02-13T12:10:43.394+0000] {standard_task_runner.py:60} INFO - Started process 5437 to run task
+[2024-02-13T12:10:43.398+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V5.4', 'data_to_db', 'manual__2024-02-13T12:10:35.281835+00:00', '--job-id', '11564', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp9n0jz87v']
+[2024-02-13T12:10:43.399+0000] {standard_task_runner.py:88} INFO - Job 11564: Subtask data_to_db
+[2024-02-13T12:10:43.459+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V5.4.data_to_db manual__2024-02-13T12:10:35.281835+00:00 [running]> on host 06573eafe810
+[2024-02-13T12:10:43.548+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V5.4' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T12:10:35.281835+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-13T12:10:35.281835+00:00'
+[2024-02-13T12:10:43.560+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T12:10:43.578+0000] {Weather_dag.py:78} INFO -    Unnamed: 0    City        date  hour  temperature_c  pressure  is_rainy
+0           0  Москва  2024-02-13     0             -3       744         0
+1           1  Москва  2024-02-13     1             -2       744         0
+2           2  Москва  2024-02-13     2             -2       744         0
+3           3  Москва  2024-02-13     3             -3       745         1
+4           4  Москва  2024-02-13     4             -4       745         0
+[2024-02-13T12:10:43.589+0000] {Weather_dag.py:85} INFO - columns: Unnamed: 0, City, date, hour, temperature_c, pressure, is_rainy
+[2024-02-13T12:10:43.590+0000] {Weather_dag.py:86} INFO - columns: Index(['Unnamed: 0', 'City', 'date', 'hour', 'temperature_c', 'pressure',
+       'is_rainy'],
+      dtype='object')
+[2024-02-13T12:10:43.590+0000] {Weather_dag.py:90} INFO - values: VALUES(%s,%s,%s,%s,%s,%s,%s)
+[2024-02-13T12:10:43.596+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/Weather_dag.py", line 95, in csv_db
+    psycopg2.extras.execute_batch(pCursor, insert_stmt, df.values)
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1216, in execute_batch
+    cur.execute(b";".join(sqls))
+psycopg2.errors.SyntaxError: syntax error at or near ":"
+LINE 1: INSERT INTO weather_tab (Unnamed: 0, City, date, hour, tempe...
+                                        ^
+
+[2024-02-13T12:10:43.609+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=Weather_DAG_V5.4, task_id=data_to_db, execution_date=20240213T121035, start_date=20240213T121043, end_date=20240213T121043
+[2024-02-13T12:10:43.623+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 11564 for task data_to_db (syntax error at or near ":"
+LINE 1: INSERT INTO weather_tab (Unnamed: 0, City, date, hour, tempe...
+                                        ^
+; 5437)
+[2024-02-13T12:10:43.652+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-13T12:10:43.676+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

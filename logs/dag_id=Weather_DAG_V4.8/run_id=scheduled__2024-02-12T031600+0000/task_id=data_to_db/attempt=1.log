@@ -1,0 +1,40 @@
+[2024-02-12T13:17:35.769+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V4.8.data_to_db scheduled__2024-02-12T03:16:00+00:00 [queued]>
+[2024-02-12T13:17:35.804+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V4.8.data_to_db scheduled__2024-02-12T03:16:00+00:00 [queued]>
+[2024-02-12T13:17:35.805+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T13:17:35.884+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): data_to_db> on 2024-02-12 03:16:00+00:00
+[2024-02-12T13:17:35.891+0000] {standard_task_runner.py:60} INFO - Started process 16241 to run task
+[2024-02-12T13:17:35.929+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V4.8', 'data_to_db', 'scheduled__2024-02-12T03:16:00+00:00', '--job-id', '9688', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp6w2dbgef']
+[2024-02-12T13:17:35.940+0000] {standard_task_runner.py:88} INFO - Job 9688: Subtask data_to_db
+[2024-02-12T13:17:36.230+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V4.8.data_to_db scheduled__2024-02-12T03:16:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T13:17:36.830+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V4.8' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T03:16:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T03:16:00+00:00'
+[2024-02-12T13:17:36.834+0000] {sql.py:276} INFO - Executing: 
+        COPY weather_tab(city, dt, houur, temperature_c, pressure_mm, is_rainy)
+        FROM 'weather.csv'
+        DELIMITER ','
+        CSV HEADER;
+[2024-02-12T13:17:36.861+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T13:17:36.885+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T13:17:36.896+0000] {sql.py:450} INFO - Running statement: 
+        COPY weather_tab(city, dt, houur, temperature_c, pressure_mm, is_rainy)
+        FROM 'weather.csv'
+        DELIMITER ','
+        CSV HEADER;, parameters: None
+[2024-02-12T13:17:36.900+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedFile: could not open file "weather.csv" for reading: No such file or directory
+HINT:  COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \copy.
+
+[2024-02-12T13:17:36.918+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=Weather_DAG_V4.8, task_id=data_to_db, execution_date=20240212T031600, start_date=20240212T131735, end_date=20240212T131736
+[2024-02-12T13:17:37.014+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 9688 for task data_to_db (could not open file "weather.csv" for reading: No such file or directory
+HINT:  COPY FROM instructs the PostgreSQL server process to read a file. You may want a client-side facility such as psql's \copy.
+; 16241)
+[2024-02-12T13:17:37.052+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-12T13:17:37.093+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

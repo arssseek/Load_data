@@ -1,0 +1,19 @@
+[2024-02-12T14:01:57.523+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V4.14.weather_csv scheduled__2024-02-12T01:06:00+00:00 [queued]>
+[2024-02-12T14:01:57.568+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V4.14.weather_csv scheduled__2024-02-12T01:06:00+00:00 [queued]>
+[2024-02-12T14:01:57.572+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T14:01:57.685+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): weather_csv> on 2024-02-12 01:06:00+00:00
+[2024-02-12T14:01:57.691+0000] {standard_task_runner.py:60} INFO - Started process 19172 to run task
+[2024-02-12T14:01:57.708+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V4.14', 'weather_csv', 'scheduled__2024-02-12T01:06:00+00:00', '--job-id', '10444', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmp_mh3musa']
+[2024-02-12T14:01:57.710+0000] {standard_task_runner.py:88} INFO - Job 10444: Subtask weather_csv
+[2024-02-12T14:01:57.973+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V4.14.weather_csv scheduled__2024-02-12T01:06:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T14:01:58.207+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V4.14' AIRFLOW_CTX_TASK_ID='weather_csv' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T01:06:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T01:06:00+00:00'
+[2024-02-12T14:01:58.238+0000] {logging_mixin.py:188} INFO - Empty DataFrame
+Columns: [City, date, hour, temperature_c, pressure, is_rainy]
+Index: []
+[2024-02-12T14:01:58.240+0000] {logging_mixin.py:188} INFO - Empty DataFrame
+Columns: [City, date, hour, temperature_c, pressure, is_rainy]
+Index: []
+[2024-02-12T14:01:58.260+0000] {python.py:201} INFO - Done. Returned value was: None
+[2024-02-12T14:01:58.321+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=Weather_DAG_V4.14, task_id=weather_csv, execution_date=20240212T010600, start_date=20240212T140157, end_date=20240212T140158
+[2024-02-12T14:01:58.584+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-12T14:01:58.730+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

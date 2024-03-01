@@ -1,0 +1,52 @@
+[2024-02-16T13:21:02.388+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Trigger_dag.create_metric_tab scheduled__2024-02-16T13:01:00+00:00 [queued]>
+[2024-02-16T13:21:02.397+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Trigger_dag.create_metric_tab scheduled__2024-02-16T13:01:00+00:00 [queued]>
+[2024-02-16T13:21:02.400+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-16T13:21:02.417+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): create_metric_tab> on 2024-02-16 13:01:00+00:00
+[2024-02-16T13:21:02.425+0000] {standard_task_runner.py:60} INFO - Started process 5337 to run task
+[2024-02-16T13:21:02.429+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Trigger_dag', 'create_metric_tab', 'scheduled__2024-02-16T13:01:00+00:00', '--job-id', '12187', '--raw', '--subdir', 'DAGS_FOLDER/trigger_dag.py', '--cfg-path', '/tmp/tmppi81t_ht']
+[2024-02-16T13:21:02.435+0000] {standard_task_runner.py:88} INFO - Job 12187: Subtask create_metric_tab
+[2024-02-16T13:21:02.495+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Trigger_dag.create_metric_tab scheduled__2024-02-16T13:01:00+00:00 [running]> on host 06573eafe810
+[2024-02-16T13:21:02.622+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Trigger_dag' AIRFLOW_CTX_TASK_ID='create_metric_tab' AIRFLOW_CTX_EXECUTION_DATE='2024-02-16T13:01:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-16T13:01:00+00:00'
+[2024-02-16T13:21:02.623+0000] {sql.py:276} INFO - Executing: 
+        CREATE TABLE IF NOT EXIST metric_tab(
+            id SERIAL PRIMARY KEY,
+	        city varchar NULL,
+	        dt date NULL,
+	        hour int2 NULL,
+	        temperature_c float8 NULL,
+	        pressure float8 NULL,
+	        is_rainy int NULL
+    );
+[2024-02-16T13:21:02.638+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-16T13:21:02.652+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-16T13:21:02.670+0000] {sql.py:450} INFO - Running statement: 
+        CREATE TABLE IF NOT EXIST metric_tab(
+            id SERIAL PRIMARY KEY,
+	        city varchar NULL,
+	        dt date NULL,
+	        hour int2 NULL,
+	        temperature_c float8 NULL,
+	        pressure float8 NULL,
+	        is_rainy int NULL
+    );, parameters: None
+[2024-02-16T13:21:02.675+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.SyntaxError: syntax error at or near "EXIST"
+LINE 2:         CREATE TABLE IF NOT EXIST metric_tab(
+                                    ^
+
+[2024-02-16T13:21:02.694+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Trigger_dag, task_id=create_metric_tab, execution_date=20240216T130100, start_date=20240216T132102, end_date=20240216T132102
+[2024-02-16T13:21:02.713+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 12187 for task create_metric_tab (syntax error at or near "EXIST"
+LINE 2:         CREATE TABLE IF NOT EXIST metric_tab(
+                                    ^
+; 5337)
+[2024-02-16T13:21:02.726+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-16T13:21:02.745+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

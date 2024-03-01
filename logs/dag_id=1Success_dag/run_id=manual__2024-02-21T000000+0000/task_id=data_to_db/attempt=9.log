@@ -1,0 +1,23 @@
+[2024-02-21T08:21:10.419+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Success_dag.data_to_db manual__2024-02-21T00:00:00+00:00 [queued]>
+[2024-02-21T08:21:10.427+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Success_dag.data_to_db manual__2024-02-21T00:00:00+00:00 [queued]>
+[2024-02-21T08:21:10.428+0000] {taskinstance.py:2170} INFO - Starting attempt 9 of 9
+[2024-02-21T08:21:10.445+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-21 00:00:00+00:00
+[2024-02-21T08:21:10.452+0000] {standard_task_runner.py:60} INFO - Started process 9250 to run task
+[2024-02-21T08:21:10.455+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Success_dag', 'data_to_db', 'manual__2024-02-21T00:00:00+00:00', '--job-id', '12689', '--raw', '--subdir', 'DAGS_FOLDER/success_dag.py', '--cfg-path', '/tmp/tmp02f5bka9']
+[2024-02-21T08:21:10.457+0000] {standard_task_runner.py:88} INFO - Job 12689: Subtask data_to_db
+[2024-02-21T08:21:10.504+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Success_dag.data_to_db manual__2024-02-21T00:00:00+00:00 [running]> on host 06573eafe810
+[2024-02-21T08:21:10.583+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Success_dag' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-21T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='9' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-21T00:00:00+00:00'
+[2024-02-21T08:21:10.585+0000] {logging_mixin.py:188} INFO - /opt/***
+[2024-02-21T08:21:10.593+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-21T08:21:10.612+0000] {success_dag.py:79} INFO -      City          dt  hour  temperature_c  pressure  is_rainy
+0  Москва  2024-02-21     0             -6       755         0
+1  Москва  2024-02-21     1             -8       754         0
+2  Москва  2024-02-21     2             -8       753         0
+3  Москва  2024-02-21     3             -8       754         0
+4  Москва  2024-02-21     4             -7       753         0
+[2024-02-21T08:21:10.621+0000] {success_dag.py:86} INFO - columns: City, dt, hour, temperature_c, pressure, is_rainy
+[2024-02-21T08:21:10.622+0000] {success_dag.py:91} INFO - values: VALUES(%s,%s,%s,%s,%s,%s)
+[2024-02-21T08:21:10.659+0000] {python.py:201} INFO - Done. Returned value was: None
+[2024-02-21T08:21:10.669+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=1Success_dag, task_id=data_to_db, execution_date=20240221T000000, start_date=20240221T082110, end_date=20240221T082110
+[2024-02-21T08:21:10.708+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-21T08:21:10.728+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,19 @@
+[2024-02-13T10:46:03.892+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.select_opera manual__2024-02-13T10:45:52.260142+00:00 [queued]>
+[2024-02-13T10:46:03.906+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.select_opera manual__2024-02-13T10:45:52.260142+00:00 [queued]>
+[2024-02-13T10:46:03.907+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T10:46:03.926+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): select_opera> on 2024-02-13 10:45:52.260142+00:00
+[2024-02-13T10:46:03.936+0000] {standard_task_runner.py:60} INFO - Started process 3460 to run task
+[2024-02-13T10:46:03.940+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Training_DAG_V1.0', 'select_opera', 'manual__2024-02-13T10:45:52.260142+00:00', '--job-id', '11314', '--raw', '--subdir', 'DAGS_FOLDER/traning_dag.py', '--cfg-path', '/tmp/tmpb4l56bcl']
+[2024-02-13T10:46:03.942+0000] {standard_task_runner.py:88} INFO - Job 11314: Subtask select_opera
+[2024-02-13T10:46:04.021+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Training_DAG_V1.0.select_opera manual__2024-02-13T10:45:52.260142+00:00 [running]> on host 06573eafe810
+[2024-02-13T10:46:04.136+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Training_DAG_V1.0' AIRFLOW_CTX_TASK_ID='select_opera' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T10:45:52.260142+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-13T10:45:52.260142+00:00'
+[2024-02-13T10:46:04.138+0000] {sql.py:276} INFO - Executing: 
+        SELECT * FROM Training
+[2024-02-13T10:46:04.151+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T10:46:04.161+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T10:46:04.184+0000] {sql.py:450} INFO - Running statement: 
+        SELECT * FROM Training, parameters: None
+[2024-02-13T10:46:04.190+0000] {sql.py:459} INFO - Rows affected: 0
+[2024-02-13T10:46:04.235+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=1Training_DAG_V1.0, task_id=select_opera, execution_date=20240213T104552, start_date=20240213T104603, end_date=20240213T104604
+[2024-02-13T10:46:04.275+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-13T10:46:04.298+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

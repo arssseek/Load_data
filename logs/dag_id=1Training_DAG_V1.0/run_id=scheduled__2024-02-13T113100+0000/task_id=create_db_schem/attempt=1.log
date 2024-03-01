@@ -1,0 +1,22 @@
+[2024-02-13T11:36:03.988+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.create_db_schem scheduled__2024-02-13T11:31:00+00:00 [queued]>
+[2024-02-13T11:36:04.001+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.create_db_schem scheduled__2024-02-13T11:31:00+00:00 [queued]>
+[2024-02-13T11:36:04.001+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T11:36:04.021+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): create_db_schem> on 2024-02-13 11:31:00+00:00
+[2024-02-13T11:36:04.030+0000] {standard_task_runner.py:60} INFO - Started process 4339 to run task
+[2024-02-13T11:36:04.033+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Training_DAG_V1.0', 'create_db_schem', 'scheduled__2024-02-13T11:31:00+00:00', '--job-id', '11365', '--raw', '--subdir', 'DAGS_FOLDER/traning_dag.py', '--cfg-path', '/tmp/tmp7v1myovt']
+[2024-02-13T11:36:04.035+0000] {standard_task_runner.py:88} INFO - Job 11365: Subtask create_db_schem
+[2024-02-13T11:36:04.174+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Training_DAG_V1.0.create_db_schem scheduled__2024-02-13T11:31:00+00:00 [running]> on host 06573eafe810
+[2024-02-13T11:36:04.322+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Training_DAG_V1.0' AIRFLOW_CTX_TASK_ID='create_db_schem' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T11:31:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-13T11:31:00+00:00'
+[2024-02-13T11:36:04.323+0000] {sql.py:276} INFO - Executing: 
+        CREATE TABLE IF NOT EXISTS Training(
+            city varchar
+            )
+[2024-02-13T11:36:04.333+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T11:36:04.343+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T11:36:04.353+0000] {sql.py:450} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS Training(
+            city varchar
+            ), parameters: None
+[2024-02-13T11:36:04.373+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=1Training_DAG_V1.0, task_id=create_db_schem, execution_date=20240213T113100, start_date=20240213T113603, end_date=20240213T113604
+[2024-02-13T11:36:04.411+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-13T11:36:04.471+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

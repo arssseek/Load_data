@@ -1,0 +1,31 @@
+[2024-02-13T10:24:31.212+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.data_to_db manual__2024-02-13T10:24:23.836775+00:00 [queued]>
+[2024-02-13T10:24:31.222+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.data_to_db manual__2024-02-13T10:24:23.836775+00:00 [queued]>
+[2024-02-13T10:24:31.223+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T10:24:31.241+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-13 10:24:23.836775+00:00
+[2024-02-13T10:24:31.248+0000] {standard_task_runner.py:60} INFO - Started process 2960 to run task
+[2024-02-13T10:24:31.251+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Training_DAG_V1.0', 'data_to_db', 'manual__2024-02-13T10:24:23.836775+00:00', '--job-id', '11253', '--raw', '--subdir', 'DAGS_FOLDER/traning_dag.py', '--cfg-path', '/tmp/tmp90a5s4j7']
+[2024-02-13T10:24:31.253+0000] {standard_task_runner.py:88} INFO - Job 11253: Subtask data_to_db
+[2024-02-13T10:24:31.306+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Training_DAG_V1.0.data_to_db manual__2024-02-13T10:24:23.836775+00:00 [running]> on host 06573eafe810
+[2024-02-13T10:24:31.399+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Training_DAG_V1.0' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T10:24:23.836775+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-02-13T10:24:23.836775+00:00'
+[2024-02-13T10:24:31.408+0000] {logging_mixin.py:188} INFO - <bound method IndexOpsMixin.tolist of Москва            Москва
+2024-02-12    2024-02-12
+0                      1
+-5                    -6
+748                  747
+1                      0
+Name: 0, dtype: object>
+[2024-02-13T10:24:31.409+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/traning_dag.py", line 26, in csv_db
+    sql_script = "INSERT INTO Training(city) VALUES (%s)" % (list_csv[0],)
+TypeError: 'method' object is not subscriptable
+[2024-02-13T10:24:31.423+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Training_DAG_V1.0, task_id=data_to_db, execution_date=20240213T102423, start_date=20240213T102431, end_date=20240213T102431
+[2024-02-13T10:24:31.439+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 11253 for task data_to_db ('method' object is not subscriptable; 2960)
+[2024-02-13T10:24:31.464+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-13T10:24:31.490+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

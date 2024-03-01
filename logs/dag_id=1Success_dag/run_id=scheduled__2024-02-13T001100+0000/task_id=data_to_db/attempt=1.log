@@ -1,0 +1,35 @@
+[2024-02-13T15:00:57.696+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Success_dag.data_to_db scheduled__2024-02-13T00:11:00+00:00 [queued]>
+[2024-02-13T15:00:57.838+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Success_dag.data_to_db scheduled__2024-02-13T00:11:00+00:00 [queued]>
+[2024-02-13T15:00:57.844+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T15:00:57.973+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): data_to_db> on 2024-02-13 00:11:00+00:00
+[2024-02-13T15:00:58.039+0000] {standard_task_runner.py:60} INFO - Started process 8647 to run task
+[2024-02-13T15:00:58.057+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Success_dag', 'data_to_db', 'scheduled__2024-02-13T00:11:00+00:00', '--job-id', '11876', '--raw', '--subdir', 'DAGS_FOLDER/success_dag.py', '--cfg-path', '/tmp/tmpoez3msmv']
+[2024-02-13T15:00:58.083+0000] {standard_task_runner.py:88} INFO - Job 11876: Subtask data_to_db
+[2024-02-13T15:00:58.316+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Success_dag.data_to_db scheduled__2024-02-13T00:11:00+00:00 [running]> on host 06573eafe810
+[2024-02-13T15:00:58.846+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Success_dag' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T00:11:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-13T00:11:00+00:00'
+[2024-02-13T15:00:58.855+0000] {logging_mixin.py:188} INFO - /opt/***
+[2024-02-13T15:00:58.883+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T15:00:58.918+0000] {success_dag.py:84} INFO - columns: City,dt,hour,temperature_c,pressure,is_rainy
+[2024-02-13T15:00:58.946+0000] {success_dag.py:95} INFO - columns: City,dt,hour,temperature_c,pressure,is_rainy
+[2024-02-13T15:00:58.971+0000] {success_dag.py:99} INFO - values: VALUES(%s,%s,%s,%s,%s,%s)
+[2024-02-13T15:00:58.981+0000] {success_dag.py:103} INFO - type values: <class 'dict'>
+[2024-02-13T15:00:58.986+0000] {success_dag.py:104} INFO - type insert_stmt: <class 'str'>
+[2024-02-13T15:00:59.000+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/success_dag.py", line 106, in csv_db
+    psycopg2.extras.execute_batch(pCursor, insert_stmt, values_dict)
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1215, in execute_batch
+    sqls = [cur.mogrify(sql, args) for args in page]
+  File "/home/airflow/.local/lib/python3.8/site-packages/psycopg2/extras.py", line 1215, in <listcomp>
+    sqls = [cur.mogrify(sql, args) for args in page]
+IndexError: string index out of range
+[2024-02-13T15:00:59.092+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Success_dag, task_id=data_to_db, execution_date=20240213T001100, start_date=20240213T150057, end_date=20240213T150059
+[2024-02-13T15:00:59.176+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 11876 for task data_to_db (string index out of range; 8647)
+[2024-02-13T15:00:59.237+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-13T15:00:59.413+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

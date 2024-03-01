@@ -1,0 +1,42 @@
+[2024-02-12T12:51:41.255+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: Weather_DAG_V4.4.data_to_db scheduled__2024-02-12T04:31:00+00:00 [queued]>
+[2024-02-12T12:51:41.312+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: Weather_DAG_V4.4.data_to_db scheduled__2024-02-12T04:31:00+00:00 [queued]>
+[2024-02-12T12:51:41.314+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-12T12:51:41.451+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): data_to_db> on 2024-02-12 04:31:00+00:00
+[2024-02-12T12:51:41.460+0000] {standard_task_runner.py:60} INFO - Started process 13355 to run task
+[2024-02-12T12:51:41.481+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'Weather_DAG_V4.4', 'data_to_db', 'scheduled__2024-02-12T04:31:00+00:00', '--job-id', '8845', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmpz5nr_1m3']
+[2024-02-12T12:51:41.494+0000] {standard_task_runner.py:88} INFO - Job 8845: Subtask data_to_db
+[2024-02-12T12:51:41.627+0000] {task_command.py:423} INFO - Running <TaskInstance: Weather_DAG_V4.4.data_to_db scheduled__2024-02-12T04:31:00+00:00 [running]> on host 06573eafe810
+[2024-02-12T12:51:42.077+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='Weather_DAG_V4.4' AIRFLOW_CTX_TASK_ID='data_to_db' AIRFLOW_CTX_EXECUTION_DATE='2024-02-12T04:31:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-12T04:31:00+00:00'
+[2024-02-12T12:51:42.079+0000] {sql.py:276} INFO - Executing: 
+        COPY persons(first_name, last_name, dob, email)
+        FROM weather.csv
+        DELIMITER ','
+        CSV HEADER;
+[2024-02-12T12:51:42.106+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T12:51:42.127+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-12T12:51:42.147+0000] {sql.py:450} INFO - Running statement: 
+        COPY persons(first_name, last_name, dob, email)
+        FROM weather.csv
+        DELIMITER ','
+        CSV HEADER;, parameters: None
+[2024-02-12T12:51:42.155+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.SyntaxError: syntax error at or near "weather"
+LINE 3:         FROM weather.csv
+                     ^
+
+[2024-02-12T12:51:42.196+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=Weather_DAG_V4.4, task_id=data_to_db, execution_date=20240212T043100, start_date=20240212T125141, end_date=20240212T125142
+[2024-02-12T12:51:42.251+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 8845 for task data_to_db (syntax error at or near "weather"
+LINE 3:         FROM weather.csv
+                     ^
+; 13355)
+[2024-02-12T12:51:42.280+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-12T12:51:42.317+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

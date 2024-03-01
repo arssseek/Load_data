@@ -1,0 +1,36 @@
+[2024-02-13T14:59:41.128+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1No_Pandas_Weather_DAG.create_db_schem scheduled__2024-02-13T01:56:00+00:00 [queued]>
+[2024-02-13T14:59:41.239+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1No_Pandas_Weather_DAG.create_db_schem scheduled__2024-02-13T01:56:00+00:00 [queued]>
+[2024-02-13T14:59:41.253+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T14:59:41.395+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): create_db_schem> on 2024-02-13 01:56:00+00:00
+[2024-02-13T14:59:41.410+0000] {standard_task_runner.py:60} INFO - Started process 8403 to run task
+[2024-02-13T14:59:41.436+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1No_Pandas_Weather_DAG', 'create_db_schem', 'scheduled__2024-02-13T01:56:00+00:00', '--job-id', '11798', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmpvk7ff314']
+[2024-02-13T14:59:41.446+0000] {standard_task_runner.py:88} INFO - Job 11798: Subtask create_db_schem
+[2024-02-13T14:59:41.790+0000] {task_command.py:423} INFO - Running <TaskInstance: 1No_Pandas_Weather_DAG.create_db_schem scheduled__2024-02-13T01:56:00+00:00 [running]> on host 06573eafe810
+[2024-02-13T14:59:42.369+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1No_Pandas_Weather_DAG' AIRFLOW_CTX_TASK_ID='create_db_schem' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T01:56:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-13T01:56:00+00:00'
+[2024-02-13T14:59:42.371+0000] {sql.py:276} INFO - Executing: 
+        DROP TABLE weather_tab;
+        CREATE TABLE weather_tab(
+            id SERIAL PRIMARY KEY,
+	        city varchar NULL,
+	        dt date NULL,
+	        hour int2 NULL,
+	        temperature_c float8 NULL,
+	        pressure float8 NULL,
+	        is_rainy int NULL
+    );
+[2024-02-13T14:59:42.413+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T14:59:42.487+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T14:59:42.525+0000] {sql.py:450} INFO - Running statement: 
+        DROP TABLE weather_tab;
+        CREATE TABLE weather_tab(
+            id SERIAL PRIMARY KEY,
+	        city varchar NULL,
+	        dt date NULL,
+	        hour int2 NULL,
+	        temperature_c float8 NULL,
+	        pressure float8 NULL,
+	        is_rainy int NULL
+    );, parameters: None
+[2024-02-13T14:59:42.635+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=1No_Pandas_Weather_DAG, task_id=create_db_schem, execution_date=20240213T015600, start_date=20240213T145941, end_date=20240213T145942
+[2024-02-13T14:59:42.831+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-13T14:59:42.928+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

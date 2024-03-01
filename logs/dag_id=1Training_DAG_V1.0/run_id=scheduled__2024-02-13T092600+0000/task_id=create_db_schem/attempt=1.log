@@ -1,0 +1,40 @@
+[2024-02-13T10:06:43.795+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.create_db_schem scheduled__2024-02-13T09:26:00+00:00 [queued]>
+[2024-02-13T10:06:43.913+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Training_DAG_V1.0.create_db_schem scheduled__2024-02-13T09:26:00+00:00 [queued]>
+[2024-02-13T10:06:43.923+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-13T10:06:44.117+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): create_db_schem> on 2024-02-13 09:26:00+00:00
+[2024-02-13T10:06:44.151+0000] {standard_task_runner.py:60} INFO - Started process 2570 to run task
+[2024-02-13T10:06:44.171+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Training_DAG_V1.0', 'create_db_schem', 'scheduled__2024-02-13T09:26:00+00:00', '--job-id', '11207', '--raw', '--subdir', 'DAGS_FOLDER/traning_dag.py', '--cfg-path', '/tmp/tmpdm0tmae9']
+[2024-02-13T10:06:44.174+0000] {standard_task_runner.py:88} INFO - Job 11207: Subtask create_db_schem
+[2024-02-13T10:06:44.569+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Training_DAG_V1.0.create_db_schem scheduled__2024-02-13T09:26:00+00:00 [running]> on host 06573eafe810
+[2024-02-13T10:06:45.590+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Training_DAG_V1.0' AIRFLOW_CTX_TASK_ID='create_db_schem' AIRFLOW_CTX_EXECUTION_DATE='2024-02-13T09:26:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-13T09:26:00+00:00'
+[2024-02-13T10:06:45.605+0000] {sql.py:276} INFO - Executing: 
+        CREATE TABLE IF NOT EXISTS Training(
+            city varchar,
+            )
+[2024-02-13T10:06:45.628+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T10:06:45.721+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-13T10:06:46.122+0000] {sql.py:450} INFO - Running statement: 
+        CREATE TABLE IF NOT EXISTS Training(
+            city varchar,
+            ), parameters: None
+[2024-02-13T10:06:46.404+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 398, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/common/sql/hooks/sql.py", line 455, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.SyntaxError: syntax error at or near ")"
+LINE 4:             )
+                    ^
+
+[2024-02-13T10:06:46.501+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=1Training_DAG_V1.0, task_id=create_db_schem, execution_date=20240213T092600, start_date=20240213T100643, end_date=20240213T100646
+[2024-02-13T10:06:46.613+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 11207 for task create_db_schem (syntax error at or near ")"
+LINE 4:             )
+                    ^
+; 2570)
+[2024-02-13T10:06:46.696+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-02-13T10:06:46.916+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

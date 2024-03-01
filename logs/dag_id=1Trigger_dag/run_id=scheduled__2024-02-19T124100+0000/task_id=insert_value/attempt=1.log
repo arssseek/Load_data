@@ -1,0 +1,93 @@
+[2024-02-19T13:01:26.662+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1Trigger_dag.insert_value scheduled__2024-02-19T12:41:00+00:00 [queued]>
+[2024-02-19T13:01:26.677+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1Trigger_dag.insert_value scheduled__2024-02-19T12:41:00+00:00 [queued]>
+[2024-02-19T13:01:26.677+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-02-19T13:01:26.699+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): insert_value> on 2024-02-19 12:41:00+00:00
+[2024-02-19T13:01:26.712+0000] {standard_task_runner.py:60} INFO - Started process 2743 to run task
+[2024-02-19T13:01:26.716+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1Trigger_dag', 'insert_value', 'scheduled__2024-02-19T12:41:00+00:00', '--job-id', '12383', '--raw', '--subdir', 'DAGS_FOLDER/trigger_dag.py', '--cfg-path', '/tmp/tmpmvnl93kk']
+[2024-02-19T13:01:26.717+0000] {standard_task_runner.py:88} INFO - Job 12383: Subtask insert_value
+[2024-02-19T13:01:26.782+0000] {task_command.py:423} INFO - Running <TaskInstance: 1Trigger_dag.insert_value scheduled__2024-02-19T12:41:00+00:00 [running]> on host 06573eafe810
+[2024-02-19T13:01:26.880+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1Trigger_dag' AIRFLOW_CTX_TASK_ID='insert_value' AIRFLOW_CTX_EXECUTION_DATE='2024-02-19T12:41:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-02-19T12:41:00+00:00'
+[2024-02-19T13:01:26.882+0000] {sql.py:276} INFO - Executing: 
+        with start_data as(
+                select city, dt, is_rainy,
+                min(hour) as start_hour
+                from weather_tab 
+                group by city,dt, is_rainy
+                having is_rainy = 1), 
+	        end_data as(
+                select city,dt,min(hour) as end_hour from weather_tab
+                where hour > (
+                    select start_hour 
+                    from start_data
+                    where (weather_tab.city = start_data.city and weather_tab.dt = start_data.dt)
+                )
+                group by city, dt, is_rainy
+                having is_rainy = 0),
+            rain_time as(
+            select start_data.city, start_data.dt, start_hour, end_hour
+            from start_data
+            left join end_data 
+            on (start_data.city = end_data.city and start_data.dt = end_data.dt)
+            order by city,dt),
+            avg_data as( 
+                select city, dt, hour,
+                avg(temperature_c) over (partition by city order by dt, hour rows between current row and 48 following) as avg_temp,
+                avg(pressure) over (partition by city order by dt, hour rows between current row and 48 following) as avg_press
+                FROM weather_tab
+                ), 
+	        metric_data as(
+                select avg_data.city, avg_data.dt, avg_data.hour, avg_data.avg_temp,
+                    avg_data.avg_press, rain_time.start_hour, rain_time.end_hour 
+                from avg_data
+                left join rain_time on (avg_data.city = rain_time.city and avg_data.dt = rain_time.dt)
+            )
+        insert into metric(city, dt, hour,
+	        avg_temp, avg_press, start_hour,	end_hour)
+        select * from metric_data
+        where not exists (select * from metric);
+    
+[2024-02-19T13:01:26.892+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-19T13:01:26.899+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-02-19T13:01:26.913+0000] {sql.py:450} INFO - Running statement: 
+        with start_data as(
+                select city, dt, is_rainy,
+                min(hour) as start_hour
+                from weather_tab 
+                group by city,dt, is_rainy
+                having is_rainy = 1), 
+	        end_data as(
+                select city,dt,min(hour) as end_hour from weather_tab
+                where hour > (
+                    select start_hour 
+                    from start_data
+                    where (weather_tab.city = start_data.city and weather_tab.dt = start_data.dt)
+                )
+                group by city, dt, is_rainy
+                having is_rainy = 0),
+            rain_time as(
+            select start_data.city, start_data.dt, start_hour, end_hour
+            from start_data
+            left join end_data 
+            on (start_data.city = end_data.city and start_data.dt = end_data.dt)
+            order by city,dt),
+            avg_data as( 
+                select city, dt, hour,
+                avg(temperature_c) over (partition by city order by dt, hour rows between current row and 48 following) as avg_temp,
+                avg(pressure) over (partition by city order by dt, hour rows between current row and 48 following) as avg_press
+                FROM weather_tab
+                ), 
+	        metric_data as(
+                select avg_data.city, avg_data.dt, avg_data.hour, avg_data.avg_temp,
+                    avg_data.avg_press, rain_time.start_hour, rain_time.end_hour 
+                from avg_data
+                left join rain_time on (avg_data.city = rain_time.city and avg_data.dt = rain_time.dt)
+            )
+        insert into metric(city, dt, hour,
+	        avg_temp, avg_press, start_hour,	end_hour)
+        select * from metric_data
+        where not exists (select * from metric);
+    , parameters: None
+[2024-02-19T13:01:26.918+0000] {sql.py:459} INFO - Rows affected: 0
+[2024-02-19T13:01:26.933+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=1Trigger_dag, task_id=insert_value, execution_date=20240219T124100, start_date=20240219T130126, end_date=20240219T130126
+[2024-02-19T13:01:26.969+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-02-19T13:01:26.992+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
