@@ -1,0 +1,40 @@
+[2024-03-05T07:45:24.357+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mongodb_to_postgres.get_data manual__2024-03-05T07:45:22.030043+00:00 [queued]>
+[2024-03-05T07:45:24.365+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mongodb_to_postgres.get_data manual__2024-03-05T07:45:22.030043+00:00 [queued]>
+[2024-03-05T07:45:24.366+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-03-05T07:45:24.384+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): get_data> on 2024-03-05 07:45:22.030043+00:00
+[2024-03-05T07:45:24.391+0000] {standard_task_runner.py:60} INFO - Started process 592 to run task
+[2024-03-05T07:45:24.394+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mongodb_to_postgres', 'get_data', 'manual__2024-03-05T07:45:22.030043+00:00', '--job-id', '13738', '--raw', '--subdir', 'DAGS_FOLDER/mongo_dag.py', '--cfg-path', '/tmp/tmp5kzu966e']
+[2024-03-05T07:45:24.397+0000] {standard_task_runner.py:88} INFO - Job 13738: Subtask get_data
+[2024-03-05T07:45:24.443+0000] {task_command.py:423} INFO - Running <TaskInstance: mongodb_to_postgres.get_data manual__2024-03-05T07:45:22.030043+00:00 [running]> on host b5253fd441c9
+[2024-03-05T07:45:24.532+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='mongodb_to_postgres' AIRFLOW_CTX_TASK_ID='get_data' AIRFLOW_CTX_EXECUTION_DATE='2024-03-05T07:45:22.030043+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-03-05T07:45:22.030043+00:00'
+[2024-03-05T07:45:54.652+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/mongo_dag.py", line 23, in get_data
+    key = ','.join(list(collections.find_one().keys()))  # key_row
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/collection.py", line 1506, in find_one
+    for result in cursor.limit(-1):
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/cursor.py", line 1264, in next
+    if len(self.__data) or self._refresh():
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/cursor.py", line 1155, in _refresh
+    self.__session = self.__collection.database.client._ensure_session()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/mongo_client.py", line 1823, in _ensure_session
+    return self.__start_session(True, causal_consistency=False)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/mongo_client.py", line 1766, in __start_session
+    self._topology._check_implicit_session_support()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/topology.py", line 573, in _check_implicit_session_support
+    self._check_session_support()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/topology.py", line 589, in _check_session_support
+    self._select_servers_loop(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pymongo/topology.py", line 259, in _select_servers_loop
+    raise ServerSelectionTimeoutError(
+pymongo.errors.ServerSelectionTimeoutError: localhost:27023: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 65e6cd94fc9ca98ce3619416, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27023) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27023: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+[2024-03-05T07:45:54.674+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=mongodb_to_postgres, task_id=get_data, execution_date=20240305T074522, start_date=20240305T074524, end_date=20240305T074554
+[2024-03-05T07:45:54.706+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 13738 for task get_data (localhost:27023: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 65e6cd94fc9ca98ce3619416, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27023) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:27023: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>; 592)
+[2024-03-05T07:45:54.727+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-03-05T07:45:54.744+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -83,7 +83,7 @@ def csv_db():
 
     # create (col1,col2,...)
     columns = ", ".join(df_columns)
-    logging.info(f"columns: {columns}")
+    logging.info(f"columns: {type(columns)}")
 
 
     # create VALUES('%s', '%s",...) one '%s' per column
