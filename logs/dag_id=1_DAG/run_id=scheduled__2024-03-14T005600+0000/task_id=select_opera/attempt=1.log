@@ -1,0 +1,19 @@
+[2024-03-14T13:40:44.884+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: 1_DAG.select_opera scheduled__2024-03-14T00:56:00+00:00 [queued]>
+[2024-03-14T13:40:44.942+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: 1_DAG.select_opera scheduled__2024-03-14T00:56:00+00:00 [queued]>
+[2024-03-14T13:40:44.946+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2024-03-14T13:40:45.012+0000] {taskinstance.py:2191} INFO - Executing <Task(PostgresOperator): select_opera> on 2024-03-14 00:56:00+00:00
+[2024-03-14T13:40:45.030+0000] {standard_task_runner.py:60} INFO - Started process 435 to run task
+[2024-03-14T13:40:45.064+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', '1_DAG', 'select_opera', 'scheduled__2024-03-14T00:56:00+00:00', '--job-id', '13872', '--raw', '--subdir', 'DAGS_FOLDER/Weather_dag.py', '--cfg-path', '/tmp/tmpdpt3uyuf']
+[2024-03-14T13:40:45.070+0000] {standard_task_runner.py:88} INFO - Job 13872: Subtask select_opera
+[2024-03-14T13:40:45.223+0000] {task_command.py:423} INFO - Running <TaskInstance: 1_DAG.select_opera scheduled__2024-03-14T00:56:00+00:00 [running]> on host b5253fd441c9
+[2024-03-14T13:40:45.474+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='1_DAG' AIRFLOW_CTX_TASK_ID='select_opera' AIRFLOW_CTX_EXECUTION_DATE='2024-03-14T00:56:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-14T00:56:00+00:00'
+[2024-03-14T13:40:45.476+0000] {sql.py:276} INFO - Executing: 
+        SELECT * FROM weather_tab
+[2024-03-14T13:40:45.489+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-03-14T13:40:45.514+0000] {base.py:83} INFO - Using connection ID 'postgres_localhost' for task execution.
+[2024-03-14T13:40:45.559+0000] {sql.py:450} INFO - Running statement: 
+        SELECT * FROM weather_tab, parameters: None
+[2024-03-14T13:40:45.571+0000] {sql.py:459} INFO - Rows affected: 0
+[2024-03-14T13:40:45.654+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=1_DAG, task_id=select_opera, execution_date=20240314T005600, start_date=20240314T134044, end_date=20240314T134045
+[2024-03-14T13:40:45.693+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-03-14T13:40:45.742+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

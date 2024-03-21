@@ -72,7 +72,7 @@ def get_weather():
 
 def csv_db():
     print(os.getcwd())
-    pConn = PostgresHook(postgres_conn_id='postgres_localhost').get_conn()
+    pConn = PostgresHook(postgres_conn_id='pg_conn').get_conn()
     pCursor = pConn.cursor()
 
     df = pd.read_csv(file_name)
@@ -125,7 +125,7 @@ data_to_db = PythonOperator(
 
 select_opera = PostgresOperator(
     task_id='select_opera',
-    postgres_conn_id='postgres_localhost',
+    postgres_conn_id='pg_conn',
     sql="""
         SELECT * FROM weather_tab""",
     dag=weather_dag
